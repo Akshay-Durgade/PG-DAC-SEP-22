@@ -1,158 +1,180 @@
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.Scanner;
-abstract class Publication
+
+class Book
 {
-	private int noOfPages;
-	private double price;
-	private String publisherName;
-	Publication(int noOfPages, double price,String publisherName)
+	String book;
+	String authors []=new String[3];
+	int pages;
+	float price;
+	String publisher;
+	Book()
 	{
-		this.noOfPages=noOfPages;
-		this.price=price;
-		this.publisherName=publisherName;
-	}
-	void setNoOfPages(int noOfPages)
-	{
-		this.noOfPages=noOfPages;
-	}
-	void setPrice(double price)
-	{
-		this.price=price;
-	}
-	void setPublisherName(String publisherName)
-	{
-		this.publisherName=publisherName;
-	}
-	int getNoOfPages()
-	{
-		return noOfPages;
-	}
-	double getPrice()
-	{
-		return price;
-	}
-	String getPublisherName()
-	{
-		return publisherName;
-	}
-	public abstract void publicationName(String name);
-	public abstract void printDetails();
-} 
-class Book extends Publication
-{
-	private String bookName;
-	Book(String bookName,int noOfPages, double price,String publisherName)
-	{
-		super(noOfPages,price,publisherName);
-		//this.bookName=bookName;
-		publicationName(bookName);
-	}
-	@Override
-	public void publicationName(String bookName)
-	{
-		this.bookName=bookName;
-	}
-	@Override
-	public void printDetails()
-	{
-		System.out.println("---------------------Book Details-------------------------");
-		System.out.println("Book Name : "+bookName);
-		System.out.println("No of Pages : "+this.getNoOfPages());
-		System.out.println("Price : "+this.getPrice());
-		System.out.println("Publisher Name : "+this.getPublisherName());
-		System.out.println("-----------------------------------------------------------");
-	}
-	
-}
-class Journal extends Publication
-{
-	private String journalName;
-	Journal(String journalName,int noOfPages, double price,String publisherName)
-	{
-		super(noOfPages,price,publisherName);
-		//this.bookName=bookName;
-		publicationName(journalName);
-	}
-	@Override
-	public void publicationName(String journalName)
-	{
-		this.journalName=journalName;
-	}
-	@Override
-	public void printDetails()
-	{
-		System.out.println("---------------------Journal Details-------------------------");
-		System.out.println("Book Name : "+journalName);
-		System.out.println("No of Pages : "+this.getNoOfPages());
-		System.out.println("Price : "+this.getPrice());
-		System.out.println("Publisher Name : "+this.getPublisherName());
-		System.out.println("-----------------------------------------------------------");
 		
 	}
+	Book(String book, String authors1, String authors2,String authors3,int pages, float price, String publisher)
+	{
+	
+		this.book = book;
+		this.authors[0]= authors1;
+		this.authors[1]= authors2;
+		this.authors[2]= authors3;
+		this.pages = pages;
+		this.price = price;
+		this.publisher = publisher;
+	}
+	String getBook() {
+		return book;
+	}
+	void setBook(String book) {
+		this.book = book;
+	}
+	String[] getAuthors() {
+		return authors;
+	}
+	void setAuthors(String[] authors) {
+		this.authors = authors;
+	}
+	int getPages() {
+		return pages;
+	}
+	void setPages(int pages) {
+		this.pages = pages;
+	}
+	float getPrice() {
+		return price;
+	}
+	void setPrice(float price) {
+		this.price = price;
+	}
+	String getPublisher() {
+		return publisher;
+	}
+	void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+	@Override
+	public String toString() {
+		return "Book \nbook=" + book + ",\nauthors=" + Arrays.toString(authors) + ",\npages=" + pages + ",\nprice=" + price
+				+ ",\npublisher=" + publisher;
+	}
+	
+	
+	
 	
 }
-class LibraryAQ1
+class Library1
 {
-	
-	public static void main(String args[])
+	Scanner sc=new Scanner(System.in);
+	Book arr[]=new Book[5];
+	Book b=new Book();
+	void addBook(int i,String book, String authors1, 
+			String authors2,String authors3,int pages, float price, String publisher)
 	{
-		Scanner sc=new Scanner(System.in);
-		Publication arr[]=new Publication[2];
-		int choice=0;
+		arr[i]=new Book(book,authors1,authors2,authors3,pages,price,publisher);
+		
+	}
+	void removeBook()
+	{
+		display();
+		System.out.println("Enter where you want to remove book");
+		int i=sc.nextInt();
+		arr[i]=null;
+	}
+	void display()
+	{
 		int i=0;
-		for(;i<arr.length;)
+			for(Book x : arr)
+			{
+				if(x==null)
+				{
+					System.out.println(i++ +".)Shelf is Empty");
+				}
+				else
+				{
+				System.out.println(i++ +".)"+(x.book));
+				}
+			}
+			System.out.println("----------------------------------------------------------");
+	}
+	void displayBookDetails()
+	{
+		display();
+		System.out.println("Enter Number to display details");
+		int i=sc.nextInt();
+		if(arr[i]==null)
 		{
-			System.out.println("------------------------------------------------------------------------");
-			System.out.println("Enter Your Choice \n0.)Exit		1.)Add a book 		2.)Add a Journal		3.)Print Library");
-			choice=sc.nextInt();
-			if(choice==0)
-			break;
+			System.out.println("No Book on shelf No. "+i);
+		}
+		else
+			System.out.println(arr[i].toString());
+		System.out.println("----------------------------------------------------------");
+	}
+}
+class LibraryAQ1{
+
+	public static void main(String[] args) 
+	{
+		Library1 l=new Library1();
+		int choice=0;
+		Scanner sr=new Scanner(System.in).useDelimiter("\n");
+		Scanner sr1=new Scanner(System.in);
+		do
+		{
+			System.out.println("Enter Choice\n1.)Add\n2.)Display Shelf\n3.)Remove\n4.)Display Book Details"
+					+ "\n0.)Exit");
+			choice=sr1.nextInt();
 			switch(choice)
 			{
-				case 0:
-					System.out.println("You chose to exit");
+				case 0 :
+				System.out.println("You Exited the program");
 				break;
 				case 1:
-					System.out.println("Enter the details in following sequence Name,Pages, Price, Publisher Name");
-					arr[i++]=new Book(sc.next(),sc.nextInt(),sc.nextDouble(), sc.next());
-				break;
+					System.out.println("Your Library is ");
+					l.display();
+					System.out.println("Enter the index where you want to enter book"
+							+ "\nIndex from 0 to 4");
+					int j=sr1.nextInt();
+					System.out.println("Enter the Book Name");
+					String book=sr.next();
+					System.out.println("Enter the Author Name");
+					String Author1=sr.next();
+					System.out.println("Enter the Author Name");
+					String Author2=sr.next();
+					System.out.println("Enter the Author Name");
+					String Author3=sr.next();
+					System.out.println("Enter the Pages");
+					int pages1=sr1.nextInt();
+					System.out.println("Enter the Price");
+					float price1=sr1.nextFloat();
+					System.out.println("Enter the Publisher Name");
+					String publisher1=sr.next();
+					l.addBook(j,book,Author1,Author2,Author3,pages1,
+							price1,publisher1);
+					l.display();
+					break;
 				case 2:
-					System.out.println("Enter the details  Name,Pages, Price, Publisher Name");
-					arr[i++]=new Book(sc.next(), sc.nextInt(),sc.nextDouble(), sc.next());
-				break;
+					System.out.println("Shelf Display is");
+					l.display();
+					break;
 				case 3:
-					try
-					{
-						for(int j=0;j<arr.length;j++)
-						{
-							if(arr[j]==null)
-								continue;
-							arr[j].printDetails();
-							System.out.println("------------------------------------------------------------------------");
-						}
-					}
-					catch(NullPointerException e)
-					{
-						System.out.println("Library is Empty");
-					}
+					l.removeBook();
+					break;
+				case 4:
+					l.displayBookDetails();
 			}
-			System.out.println("------------------------------------------------------------------------");
-		}
-		try
-		{
-			for(int j=0;j<arr.length;j++)
-			{
-				if(arr[j]==null)
-					continue;
-				arr[j].printDetails();
-				System.out.println("------------------------------------------------------------------------");
-			}
-		}
-		catch(NullPointerException e)
-		{
-			System.out.println("Library is Empty");
-		}
-			
-		}	
+		}while(choice!=0);
+		sr.close();
+	}
 }
+
+
+
+
+
+//System.out.println("Enter the author name,"
+//		+ "if available or enter null");
+//for(int i=0;i<author.length;i++)
+//{
+//	author[i]=sr.next();
+//}
