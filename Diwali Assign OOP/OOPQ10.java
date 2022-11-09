@@ -22,7 +22,7 @@ class OOPQ10
 		Demo temp=d1;
 		d1=d2;
 		d2=temp;
-		Demo d2=d1.passingReturningObject(d1);
+		System.out.println("Value of a using d1 object : "+d1.a);
 		System.out.println("Value of a using d2 object : "+d2.a);
 		
 		
